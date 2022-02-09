@@ -22,7 +22,7 @@ class Help(SlashCog):
     async def command(self, ctx: ApplicationContext):
         emd = discord.Embed(
             description=f'\n\n{Emo.SETUP} Create & send embeds using **`/embed`**'
-                        f'\n{Emo.FAQ} **FAQ**'
+                        f'\n\n{Emo.FAQ} **FAQs**'
                         f'\n\n> `1` **title**: The title of the embed'
                         f'\n> `2` **description**: The description of the embed'
                         f'\n> `3` **color**: The color of the embed'
