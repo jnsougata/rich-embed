@@ -28,12 +28,18 @@ class Embed(SlashCog):
         )
 
     async def command(self, ctx: ApplicationContext):
+
         if not ctx.author.guild_permissions.administrator:
             await ctx.send_response('You need to be an admin or equivalent to use this command', ephemeral=True)
             return
-        slots = {}
+
         channel = ctx.options[0].value
+        if not channel.permissions_for(ctx.me).send_messages:
+            await ctx.send_response('I do not have permission to send messages in the channel', ephemeral=True)
+            return
+
         ctx.options.pop(0)
+        slots = {}
         for option in ctx.options:
             special = ['author', 'footer', 'thumbnail', 'image', 'color', 'description']
             name = option.name
