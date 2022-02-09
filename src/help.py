@@ -41,7 +41,5 @@ class Help(SlashCog):
 
 
 
-
-
 def setup(bot: Bot):
     bot.add_slash_cog(Help(bot))
