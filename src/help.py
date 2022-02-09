@@ -32,8 +32,8 @@ class Help(SlashCog):
                         f'\n> `7` **author**: The author of the embed'
                         f'\n> `8` **footer**: The footer text of the embed'
                         f'\n> `9` For making new line in the description use **`$/`**'
-                        f'\n> `10` This embeds support basic text formatting in the description'
-                        f'\n>  To know more about formatting visit **[here]'
+                        f'\n> `10` This embeds support basic text formatting '
+                        f'\n> To know more formatting styles visit **[here]'
                         f'(https://support.discord.com/hc/'
                         f'en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-)**'
                         f'\n{Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
