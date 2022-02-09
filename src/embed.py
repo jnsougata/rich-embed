@@ -14,8 +14,10 @@ class Embed(SlashCog):
             name='embed',
             description='creates an embed to a channel',
             options=[
-                extslash.ChannelOption(name='channel', description='text channel to send the embed to',
-                                       required=True),
+                extslash.ChannelOption(
+                    name='channel',
+                    description='text channel to send the embed to',
+                    required=True, channel_types=[extslash.ChannelType.GUILD_TEXT]),
                 extslash.StrOption('title', 'title of the embed', required=False),
                 extslash.StrOption('description', 'description of the embed', required=False),
                 extslash.StrOption('url', 'url of the embed', required=False),
