@@ -38,7 +38,7 @@ class Help(SlashCog):
                         f'en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-)**'
                         f'\n\n{Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
             color=0x005aef)
-        await ctx.send_response(embed=embed)
+        await ctx.send_response(embed=emd)
 
 
     async def on_error(self, ctx: ApplicationContext, error: Exception):
