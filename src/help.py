@@ -5,6 +5,13 @@ import extslash
 from extslash.commands import Bot, SlashCog, ApplicationContext
 
 
+class Emo:
+    FAQ = '<:Faq:862729604666228738>'
+    SUP = '<:Support:862728959254855711>'
+    SETUP = '<:setup:936619226259652760>'
+
+
+
 class Help(SlashCog):
     def __init__(self, bot: Bot):
         self.bot = bot
