@@ -35,7 +35,7 @@ class Embed(SlashCog):
 
         channel = ctx.options[0].value
         if not channel.permissions_for(ctx.me).send_messages:
-            await ctx.send_response('I do not have permission to send messages in the channel', ephemeral=True)
+            await ctx.send_response(f'I do not have permission to send messages in {channel.mention}', ephemeral=True)
             return
 
         ctx.options.pop(0)
