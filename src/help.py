@@ -36,7 +36,7 @@ class Help(SlashCog):
                         f'\n> To know more formatting styles visit **[here]'
                         f'(https://support.discord.com/hc/'
                         f'en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-)**'
-                        f'\n{Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
+                        f'\n> {Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
             color=0x005aef)
         await ctx.send_response(embed=emd)
 
@@ -45,7 +45,6 @@ class Help(SlashCog):
         stack = traceback.format_exception(type(error), error, error.__traceback__)
         print(''.join(stack), file=sys.stderr)
         await ctx.send_response(f'Something went wrong! Please try again...', ephemeral=True)
-
 
 
 def setup(bot: Bot):
