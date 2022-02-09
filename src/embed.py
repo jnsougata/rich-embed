@@ -1,5 +1,4 @@
 import sys
-import asyncio
 import traceback
 import discord
 import extslash
@@ -65,13 +64,11 @@ class Embed(SlashCog):
     async def on_error(self, ctx: ApplicationContext, error: Exception):
         stack = traceback.format_exception(type(error), error, error.__traceback__)
         print(''.join(stack), file=sys.stderr)
+        await ctx.send_response(f'Something went wrong! Please try again...', ephemeral=True)
 
 
 
 
 
 def setup(bot: Bot):
-    bot.add_slash_cog(Embed(bot), 877399405056102431)
-    # add guild if you want to limit the command to a specific guild
-    # if you to register the command to all guilds, you can leave it empty
-    # global commands take 1hour to register for the first time for all guilds
+    bot.add_slash_cog(Embed(bot))
