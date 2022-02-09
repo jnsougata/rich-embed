@@ -21,9 +21,9 @@ class Help(SlashCog):
 
     async def command(self, ctx: ApplicationContext):
         emd = discord.Embed(
-            description=f'\n\n{Emo.SETUP} Create `embed` using **`/embed`**'
-                        f'\n\n{Emo.FAQ} FAQs:'
-                        f'\n> `1` **title**: The title of the embed'
+            description=f'\n\n{Emo.SETUP} Create & send embeds using **`/embed`**'
+                        f'\n{Emo.FAQ} **FAQ**'
+                        f'\n\n> `1` **title**: The title of the embed'
                         f'\n> `2` **description**: The description of the embed'
                         f'\n> `3` **color**: The color of the embed'
                         f'\n> `4` **url**: The hyperlink url of the title'
@@ -33,10 +33,10 @@ class Help(SlashCog):
                         f'\n> `8` **footer**: The footer text of the embed'
                         f'\n> `9` For making new line in the description use **`$/`**'
                         f'\n> `10` This embeds support basic text formatting in the description'
-                        f'\n> To know more about formatting visit **[here]'
+                        f'\n>  To know more about formatting visit **[here]'
                         f'(https://support.discord.com/hc/'
                         f'en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-)**'
-                        f'\n\n{Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
+                        f'\n{Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
             color=0x005aef)
         await ctx.send_response(embed=emd)
 
