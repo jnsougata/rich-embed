@@ -20,6 +20,9 @@ class Help(SlashCog):
         return extslash.SlashCommand(name='help', description='insights about the commands',)
 
     async def command(self, ctx: ApplicationContext):
+
+        await ctx.defer()
+
         emd = discord.Embed(
             description=f'\n\n{Emo.SETUP} Create & send embeds using **`/embed`**'
                         f'\n\n{Emo.FAQ} **FAQs**'
@@ -38,7 +41,7 @@ class Help(SlashCog):
                         f'en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-)**'
                         f'\n> {Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
             color=0x005aef)
-        await ctx.send_response(embed=emd)
+        await ctx.send_followup(embed=emd)
 
 
     async def on_error(self, ctx: ApplicationContext, error: Exception):
