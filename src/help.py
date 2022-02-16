@@ -47,7 +47,7 @@ class Help(SlashCog):
     async def on_error(self, ctx: ApplicationContext, error: Exception):
         stack = traceback.format_exception(type(error), error, error.__traceback__)
         print(''.join(stack), file=sys.stderr)
-        await ctx.send_response(f'Something went wrong! Please try again...', ephemeral=True)
+        await ctx.send_followup(f'Something went wrong! Please try again...', ephemeral=True)
 
 
 def setup(bot: Bot):
