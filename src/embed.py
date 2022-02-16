@@ -1,12 +1,12 @@
 import sys
-import traceback
 import discord
+import traceback
 import extslash
-from extslash.commands import Bot, SlashCog, ApplicationContext
+from extslash import commands
 
 
-class Embed(SlashCog):
-    def __init__(self, bot: Bot):
+class Embed(commands.SlashCog):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     def register(self):
@@ -17,7 +17,12 @@ class Embed(SlashCog):
                 extslash.ChannelOption(
                     name='channel',
                     description='text channel to send the embed to',
-                    required=True, channel_types=[extslash.ChannelType.GUILD_TEXT]),
+                    channel_types=[
+                        extslash.ChannelType.GUILD_TEXT,
+                        extslash.ChannelType.GUILD_NEWS,
+                        extslash.ChannelType.GUILD_STORE
+                    ],
+                    required=True),
                 extslash.StrOption('title', 'title of the embed', required=False),
                 extslash.StrOption('description', 'description of the embed', required=False),
                 extslash.StrOption('url', 'url of the embed', required=False),
@@ -29,15 +34,17 @@ class Embed(SlashCog):
             ],
         )
 
-    async def command(self, ctx: ApplicationContext):
+    async def command(self, ctx: commands.ApplicationContext):
+
+        await ctx.defer(ephemeral=True)
 
         if not ctx.author.guild_permissions.administrator:
-            await ctx.send_response('You need to be an admin or equivalent to use this command', ephemeral=True)
+            await ctx.send_followup('You need to be an admin or equivalent to use this command', ephemeral=True)
             return
 
         channel = ctx.options[0].value
         if not channel.permissions_for(ctx.me).send_messages:
-            await ctx.send_response(f'I do not have permission to send messages in {channel.mention}', ephemeral=True)
+            await ctx.send_followup(f'I do not have permission to send messages in {channel.mention}', ephemeral=True)
             return
 
         ctx.options.pop(0)
@@ -66,17 +73,17 @@ class Embed(SlashCog):
 
         embed = discord.Embed.from_dict(slots)
         await channel.send(embed=embed)
-        await ctx.send_response(f'Embed sent successfully to {channel.mention}', ephemeral=True)
+        await ctx.send_followup(f'Embed sent successfully to {channel.mention}', ephemeral=True)
 
 
-    async def on_error(self, ctx: ApplicationContext, error: Exception):
+    async def on_error(self, ctx: commands.ApplicationContext, error: Exception):
         stack = traceback.format_exception(type(error), error, error.__traceback__)
         print(''.join(stack), file=sys.stderr)
-        await ctx.send_response(f'Something went wrong! Please try again...', ephemeral=True)
+        await ctx.send_followup(f'Something went wrong! Please try again...', ephemeral=True)
 
 
 
 
 
-def setup(bot: Bot):
+def setup(bot: commands.Bot):
     bot.add_slash_cog(Embed(bot))

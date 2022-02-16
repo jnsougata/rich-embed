@@ -19,4 +19,5 @@ class MyBot(commands.Bot):
 bot = MyBot()
 bot.load_extension('src.embed')
 bot.load_extension('src.help')
+bot.load_extension('src.ping')
 bot.run(os.getenv('DISCORD_TOKEN'))
