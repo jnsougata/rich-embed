@@ -2,7 +2,6 @@ import sys
 import traceback
 import discord
 import extslash
-from extslash.commands import Bot, SlashCog, ApplicationContext
 
 
 class Emo:
@@ -12,17 +11,13 @@ class Emo:
 
 
 
-class Help(SlashCog):
-    def __init__(self, bot: Bot):
+class Help(extslash.Cog):
+    def __init__(self, bot: extslash.Bot):
         self.bot = bot
 
-    def register(self):
-        return extslash.SlashCommand(name='help', description='insights about the commands',)
-
-    async def command(self, ctx: ApplicationContext):
-
+    @extslash.Cog.command(command=extslash.SlashCommand(name='help', description='insights about the commands'))
+    async def command(self, ctx: extslash.ApplicationContext):
         await ctx.defer()
-
         emd = discord.Embed(
             description=f'\n\n{Emo.SETUP} Create & send embeds using **`/embed`**'
                         f'\n\n{Emo.FAQ} **FAQs**'
@@ -44,11 +39,5 @@ class Help(SlashCog):
         await ctx.send_followup(embed=emd)
 
 
-    async def on_error(self, ctx: ApplicationContext, error: Exception):
-        stack = traceback.format_exception(type(error), error, error.__traceback__)
-        print(''.join(stack), file=sys.stderr)
-        await ctx.send_followup(f'Something went wrong! Please try again...', ephemeral=True)
-
-
-def setup(bot: Bot):
+def setup(bot: extslash.Bot):
     bot.add_slash_cog(Help(bot))

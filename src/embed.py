@@ -2,15 +2,14 @@ import sys
 import discord
 import traceback
 import extslash
-from extslash import commands
 
 
-class Embed(commands.SlashCog):
-    def __init__(self, bot: commands.Bot):
+class Embed(extslash.Cog):
+    def __init__(self, bot: extslash.Bot):
         self.bot = bot
 
-    def register(self):
-        return extslash.SlashCommand(
+    @extslash.Cog.command(
+        command=extslash.SlashCommand(
             name='embed',
             description='creates an embed to a channel',
             options=[
@@ -33,8 +32,8 @@ class Embed(commands.SlashCog):
                 extslash.AttachmentOption('image', 'image file of embed image', required=False),
             ],
         )
-
-    async def command(self, ctx: commands.ApplicationContext):
+    )
+    async def command(self, ctx: extslash.ApplicationContext):
 
         await ctx.defer(ephemeral=True)
 
@@ -76,7 +75,8 @@ class Embed(commands.SlashCog):
         await ctx.send_followup(f'Embed sent successfully to {channel.mention}', ephemeral=True)
 
 
-    async def on_error(self, ctx: commands.ApplicationContext, error: Exception):
+    @extslash.Cog.listener
+    async def on_command_error(self, ctx: extslash.ApplicationContext, error: Exception):
         stack = traceback.format_exception(type(error), error, error.__traceback__)
         print(''.join(stack), file=sys.stderr)
         await ctx.send_followup(f'Something went wrong! Please try again...', ephemeral=True)
@@ -85,5 +85,5 @@ class Embed(commands.SlashCog):
 
 
 
-def setup(bot: commands.Bot):
+def setup(bot: extslash.Bot):
     bot.add_slash_cog(Embed(bot))
