@@ -3,7 +3,7 @@ import app_util
 
 
 
-class Ping(extslash.Cog):
+class Ping(app_util.Cog):
     def __init__(self, bot: app_util.Bot):
         self.bot = bot
 

@@ -13,13 +13,13 @@ class Help(app_util.Cog):
     def __init__(self, bot: app_util.Bot):
         self.bot = bot
 
-    @extslash.Cog.command(
-        command=extslash.SlashCommand(
+    @app_util.Cog.command(
+        command=app_util.SlashCommand(
             name='help',
             description='insights about the commands'
         )
     )
-    async def command(self, ctx: extslash.ApplicationContext):
+    async def command(self, ctx: app_util.Context):
         emd = discord.Embed(
             description=f'\n\n{Emo.SETUP} Create & send embeds using **`/embed`**'
                         f'\n\n{Emo.FAQ} **FAQs**'
