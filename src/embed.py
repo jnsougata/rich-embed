@@ -2,7 +2,7 @@ import sys
 import asyncio
 import traceback
 import discord
-import src.app_util as app_util
+import app_util
 
 
 async def job(ctx: app_util.Context):
@@ -14,7 +14,7 @@ async def job(ctx: app_util.Context):
         return True
 
 
-class Sample(app_util.Cog):
+class Main(app_util.Cog):
 
     def __init__(self, bot: app_util.Bot):
         self.bot = bot
@@ -26,16 +26,6 @@ class Sample(app_util.Cog):
         tb = ''.join(stack)
         print(tb, file=sys.stderr)
         await ctx.send_followup(f'Traceback printed in terminal!')
-
-
-    @app_util.Cog.command(
-        command=app_util.SlashCommand(
-            name='global',
-            description='placeholder global command',
-        )
-    )
-    async def global_command(self, ctx: app_util.Context):
-        await ctx.send_response(f'You have successfully used a Global Application Command')
 
 
     @app_util.Cog.command(
@@ -111,51 +101,6 @@ class Sample(app_util.Cog):
         await ctx.send_response(f'LOL! {ctx.clicked_user.mention} '
                                 f'you have been bonked by {ctx.author.mention}')
 
-    @app_util.Cog.command(
-        command=app_util.MessageCommand(name='Pin'),
-        guild_id=877399405056102431
-    )
-    async def pin_command(self, ctx: app_util.Context):
-        print(ctx.command.type)
-        await ctx.clicked_message.pin()
-        await ctx.send_response(f'Message pinned by {ctx.author.mention}')
-
-    @app_util.Cog.command(
-        command=app_util.SlashCommand(
-            name='delete',
-            description='deletes an existing application command',
-            options=[
-                app_util.StrOption('name', 'name of command to delete', required=True),
-            ],
-        ),
-        guild_id=877399405056102431
-    )
-    @app_util.Cog.before_invoke(job=job)
-    async def delete_command(self, ctx: app_util.Context, name: str):
-        await ctx.defer()
-        await self.bot.sync_for(ctx.guild)
-        for command in self.bot.application_commands:
-            if command.name == name:
-                await command.delete()
-                await ctx.send_followup(f'Application Command **`{name}`** has been deleted | (ID: {command.id})')
-                break
-        else:
-            await ctx.send_followup(f'Application Command **`{name}`** does not exist')
-
-    @app_util.Cog.command(
-        command=app_util.SlashCommand(
-            name='perm',
-            description='edits command perms',
-        ),
-        guild_id=877399405056102431
-    )
-    async def edit_command(self, ctx: app_util.Context):
-        await ctx.defer()
-        ows = [app_util.Overwrite.for_user(ctx.author.id, allow=False)]
-        await ctx.command.add_overwrites(ows, ctx.guild)
-        await ctx.send_followup(
-            f'Edited Application Command perms for {ctx.name}')
-
 
 def setup(bot: app_util.Bot):
-    bot.add_application_cog(Sample(bot))
+    bot.add_application_cog(Main(bot))
