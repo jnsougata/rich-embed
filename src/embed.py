@@ -93,14 +93,5 @@ class Main(app_util.Cog):
         await ctx.send_followup(f'Embed sent successfully')
 
 
-    @app_util.Cog.command(
-        command=app_util.UserCommand(name='Bonk'),
-        guild_id=877399405056102431
-    )
-    async def promote_command(self, ctx: app_util.Context):
-        await ctx.send_response(f'LOL! {ctx.clicked_user.mention} '
-                                f'you have been bonked by {ctx.author.mention}')
-
-
 def setup(bot: app_util.Bot):
     bot.add_application_cog(Main(bot))
