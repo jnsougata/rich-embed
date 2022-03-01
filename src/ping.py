@@ -1,19 +1,19 @@
 import discord
-import extslash
+import app_util
 
 
 
 class Ping(extslash.Cog):
-    def __init__(self, bot: extslash.Bot):
+    def __init__(self, bot: app_util.Bot):
         self.bot = bot
 
     @extslash.Cog.command(
-        command=extslash.SlashCommand(name='ping', description='shows avg ping of client'),
+        command=app_util.SlashCommand(name='ping', description='shows avg ping of client'),
         guild_id=877399405056102431
     )
-    async def command(self, ctx: extslash.ApplicationContext):
+    async def command(self, ctx: app_util.Context):
         await ctx.send_response(embed=discord.Embed(title='Pong!', description=f'{self.bot.latency * 1000:.2f}ms'))
 
 
-def setup(bot: extslash.Bot):
-    bot.add_slash_cog(Ping(bot))
+def setup(bot: app_util.Bot):
+    bot.add_application_cog(Ping(bot))

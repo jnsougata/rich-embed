@@ -1,13 +1,13 @@
 import os
 import discord
-import extslash
+import app_util
 
 
 intents = discord.Intents.default()
 intents.members = True
 
 
-class MyBot(extslash.Bot):
+class MyBot(app_util.Bot):
     def __init__(self):
         super().__init__(command_prefix='-', intents=intents)
 
