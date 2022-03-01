@@ -7,7 +7,7 @@ class Ping(app_util.Cog):
     def __init__(self, bot: app_util.Bot):
         self.bot = bot
 
-    @extslash.Cog.command(
+    @app_util.Cog.command(
         command=app_util.SlashCommand(name='ping', description='shows avg ping of client'),
         guild_id=877399405056102431
     )
