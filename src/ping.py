@@ -15,7 +15,7 @@ class Ping(app_util.Cog):
     )
     async def command(self, ctx: app_util.Context):
         await ctx.send_response(
-            embed=discord.Embed(title='Pong!', description=f'{self.bot.latency * 1000:.2f}ms'))
+            embed=discord.Embed(title=f'Pong! {self.bot.latency * 1000:.2f}ms'))
 
 
 def setup(bot: app_util.Bot):
