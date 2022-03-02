@@ -1,2 +1,4 @@
 git+https://github.com/Rapptz/discord.py
 app_util==0.1.9
+
+# retry
