@@ -90,7 +90,7 @@ class Main(app_util.Cog):
 
         embed = discord.Embed.from_dict(slots)
         await ctx.channel.send(embed=embed, view=view)
-        await ctx.send_followup(f'Embed sent successfully')
+        await ctx.send_followup(f'Embed sent successfully...')
 
 
 def setup(bot: app_util.Bot):
