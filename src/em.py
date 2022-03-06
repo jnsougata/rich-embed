@@ -92,10 +92,14 @@ class Main(app_util.Cog):
                     color = discord.Color.default()
                 slots['color'] = color
             embed = discord.Embed.from_dict(slots)
-            await ctx.channel.send(embed=embed, view=view)
-            await ctx.send_followup(f'{ctx.author.mention} embed posted here...')
+            try:
+                await ctx.channel.send(embed=embed, view=view)
+            except discord.errors.Forbidden:
+                await ctx.send_response(f'{ctx.author.mention} I do not have permission to send embeds here')
+            else:
+                await ctx.send_followup(f'{ctx.author.mention} embed posted here')
         else:
-            await ctx.send_followup(f'{ctx.author.mention} can not post an empty embed...')
+            await ctx.send_followup(f'{ctx.author.mention} can not post an empty embed')
 
 
 def setup(bot: app_util.Bot):
