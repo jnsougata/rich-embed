@@ -5,7 +5,7 @@ import discord
 import app_util
 
 
-async def job(ctx: app_util.Context):
+async def check(ctx: app_util.Context):
     if not ctx.guild:
         await ctx.send_response(f'{ctx.author.mention} please use command `{ctx.name}` inside a guild')
     elif not ctx.author.guild_permissions.administrator:
@@ -21,11 +21,10 @@ class Main(app_util.Cog):
 
     @app_util.Cog.listener
     async def on_command_error(self, ctx: app_util.Context, error: Exception):
-        print(error.__class__.__name__, file=sys.stderr)
         stack = traceback.format_exception(type(error), error, error.__traceback__)
-        tb = ''.join(stack)
-        print(tb, file=sys.stderr)
-        await ctx.send_followup(f'Traceback printed in terminal!')
+        print(''.join(stack), file=sys.stderr)
+        if ctx.responded:
+            await ctx.send_followup(f'{ctx.author.mention} something went wrong! Please retry after a few seconds...')
 
 
     @app_util.Cog.command(
@@ -47,6 +46,7 @@ class Main(app_util.Cog):
             ],
         ),
     )
+    @app_util.Cog.before_invoke(check)
     async def embed(
             self,
             ctx: app_util.Context,
@@ -60,16 +60,14 @@ class Main(app_util.Cog):
         slots = {}
         if title:
             slots['title'] = title
+            if url:
+                slots['url'] = url
         if footer_text:
             slots['footer'] = {'text': footer_text}
             if footer_icon:
                 slots['footer']['icon_url'] = footer_icon.url
         if description:
             slots['description'] = description.replace('$/', '\n')
-        if url:
-            slots['url'] = url
-        if color:
-            slots['color'] = int(color, 16)
         if author:
             slots['author'] = {
                 'name': author.name,
@@ -82,15 +80,18 @@ class Main(app_util.Cog):
         if image:
             slots['image'] = {'url': image.url}
 
-        view = discord.ui.View()
-
-        if link_button:
-            button = discord.ui.Button(style=discord.ButtonStyle.link, label='link', url=link_button)
-            view.add_item(button)
-
-        embed = discord.Embed.from_dict(slots)
-        await ctx.channel.send(embed=embed, view=view)
-        await ctx.send_followup(f'Embed sent successfully...')
+        if slots:
+            view = discord.ui.View()
+            if link_button:
+                button = discord.ui.Button(style=discord.ButtonStyle.link, label='link', url=link_button)
+                view.add_item(button)
+            if color:
+                slots['color'] = int(color, 16)
+            embed = discord.Embed.from_dict(slots)
+            await ctx.channel.send(embed=embed, view=view)
+            await ctx.send_followup(f'{ctx.author.mention} embed posted here...')
+        else:
+            await ctx.send_followup(f'{ctx.author.mention} can not post an empty embed...')
 
 
 def setup(bot: app_util.Bot):
