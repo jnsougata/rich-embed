@@ -35,7 +35,7 @@ class Main(app_util.Cog):
                 app_util.StrOption('title', 'title of the embed', required=False),
                 app_util.StrOption('description', 'description of the embed', required=False),
                 app_util.StrOption('url', 'hyperlink url of the title', required=False),
-                app_util.StrOption('color', 'color hex of the embed', required=False),
+                app_util.StrOption('color_hex', 'color hex of the embed', required=False),
                 app_util.UserOption('author', 'author of the embed', required=False),
                 app_util.StrOption('author_url', 'hyperlink url of the author', required=False),
                 app_util.AttachmentOption('thumbnail', 'image file of thumbnail', required=False),
@@ -52,7 +52,7 @@ class Main(app_util.Cog):
             ctx: app_util.Context,
             *,
             title: str, description: str, url: str,
-            color: str, author: discord.User, author_url: str,
+            color_hex: str, author: discord.User, author_url: str,
             thumbnail: discord.Attachment, image: discord.Attachment,
             footer_icon: discord.Attachment, footer_text: str, link_button: str,
     ):
@@ -85,8 +85,12 @@ class Main(app_util.Cog):
             if link_button:
                 button = discord.ui.Button(style=discord.ButtonStyle.link, label='link', url=link_button)
                 view.add_item(button)
-            if color:
-                slots['color'] = int(color, 16)
+            if color_hex:
+                try:
+                    color = int(color_hex, 16)
+                except ValueError:
+                    color = discord.Color.default()
+                slots['color'] = color
             embed = discord.Embed.from_dict(slots)
             await ctx.channel.send(embed=embed, view=view)
             await ctx.send_followup(f'{ctx.author.mention} embed posted here...')
