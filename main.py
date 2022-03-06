@@ -14,6 +14,7 @@ class MyBot(app_util.Bot):
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         print('------')
+        await self.change_presence(activity=discord.Game(name='-help'))
 
 
 bot = MyBot()

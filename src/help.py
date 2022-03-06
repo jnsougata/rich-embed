@@ -25,7 +25,7 @@ class Help(app_util.Cog):
                         f'\n\n{Emo.FAQ} **FAQs**'
                         f'\n\n> `1` **title**: The title of the embed'
                         f'\n> `2` **description**: The description of the embed'
-                        f'\n> `3` **color**: The color of the embed'
+                        f'\n> `3` **color_hex**: The color code of the embed in hex'
                         f'\n> `4` **url**: The hyperlink url of the title'
                         f'\n> `5` **thumbnail**: The image file of thumbnail'
                         f'\n> `6` **image**: The image file to attach with embed'
@@ -36,11 +36,11 @@ class Help(app_util.Cog):
                         f'\n> `11` **link_button**: Send a hyperlink button with the embed'
                         f'\n> `12` For making new line in the description use **`$/`**'
                         f'\n> `13` This embeds support basic text formatting'
-                        f'\n> To know more formatting styles visit **[here]'
+                        f'\n> To know more about formatting styles visit **[here]'
                         f'(https://support.discord.com/hc/'
                         f'en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline-)**'
                         f'\n> {Emo.SUP} Having issues? Join **[Dev & Support](https://discord.gg/VE5qRFfmG2)**',
-            color=0x005aef)
+            color=0x2f3136)
         await ctx.send_response(embed=emd)
 
 
